@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Literary Magazine</title>
+    <style>
+        /* Color scheme - adjust to match your magazine's design */
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --background: #f5f5f5;
+            --text: #333;
+            --light: #ecf0f1;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--background);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 20px 0;
+            position: relative;
+        }
+        
+        .site-title {
+            font-size: 2.5rem;
+            margin-bottom: 5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .site-subtitle {
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+        
+        /* Navigation */
+        nav {
+            background-color: var(--primary);
+            padding-bottom: 10px;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        nav ul li {
+            margin-right: 20px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            padding: 5px 0;
+            position: relative;
+        }
+        
+        nav ul li a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--secondary);
+            transition: width 0.2s ease-in-out;
+        }
+        
+        nav ul li a:hover:after {
+            width: 100%;
+        }
+        
+        /* Current Issue Section */
+        .current-issue {
+            padding: 40px 0;
+            background: white;
+        }
+        
+        .issue-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .issue-title {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .issue-subtitle {
+            font-style: italic;
+            color: var(--secondary);
+        }
+        
+        .issue-cover {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        
+        .issue-cover img {
+            max-width: 300px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        /* Feature Section */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .feature {
+            background: white;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .feature:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-image {
+            height: 200px;
+            background-color: #ddd;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .feature-content {
+            padding: 20px;
+        }
+        
+        .feature-title {
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .feature-author {
+            font-style: italic;
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+        
+        .feature-excerpt {
+            margin-bottom: 15px;
+        }
+        
+        .read-more {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 8px 15px;
+            text-decoration: none;
+            border-radius: 3px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .read-more:hover {
+            background-color: var(--secondary);
+        }
+        
+        /* Previous Issues */
+        .previous-issues {
+            padding: 40px 0;
+            background-color: var(--light);
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            color: var(--primary);
+        }
+        
+        .issues-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .issue-card {
+            text-align: center;
+        }
+        
+        .issue-card img {
+            max-width: 150px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+            margin-bottom: 10px;
+            transition: transform 0.3s ease;
+        }
+        
+        .issue-card img:hover {
+            transform: scale(1.05);
+        }
+        
+        .issue-info {
+            font-size: 0.9rem;
+        }
+        
+        /* Submissions Section */
+        .submissions {
+            padding: 40px 0;
+            background-color: white;
+            text-align: center;
+        }
+        
+        .submissions p {
+            max-width: 700px;
+            margin: 0 auto 20px;
+        }
+        
+        .submit-button {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 3px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        
+        .submit-button:hover {
+            background-color: #c0392b;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .social-links {
+            margin-bottom: 20px;
+        }
+        
+        .social-links a {
+            color: white;
+            margin: 0 10px;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .footer-menu {
+            margin-bottom: 20px;
+        }
+        
+        .footer-menu a {
+            color: white;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+        
+        .footer-menu a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .site-title {
+                font-size: 2rem;
+            }
+            
+            nav ul {
+                flex-direction: column;
+            }
+            
+            nav ul li {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="site-title">Literary Horizons</h1>
+            <p class="site-subtitle">Saint Joseph's University Literary Magazine</p>
+            <nav>
+                <ul>
+                    <li><a href="#current-issue">Current Issue</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#archive">Archive</a></li>
+                    <li><a href="#submissions">Submissions</a></li>
+                    <li><a href="#staff">Staff</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="current-issue" id="current-issue">
+        <div class="container">
+            <div class="issue-header">
+                <h2 class="issue-title">Spring 2025</h2>
+                <p class="issue-subtitle">Vol. 23 | Issue 2</p>
+            </div>
+            
+            <div class="issue-cover">
+                <img src="/api/placeholder/400/500" alt="Spring 2025 Issue Cover">
+            </div>
+            
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-image" style="background-image: url('/api/placeholder/300/200')"></div>
+                    <div class="feature-content">
+                        <h3 class="feature-title">Passion on Everything</h3>
+                        <p class="feature-author">By Jane Doe</p>
+                        <p class="feature-excerpt">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut at magna nec nunc sagittis aliquam eu id eros. Phasellus feugiat est in magna sagittis...</p>
+                        <a href="#" class="read-more">Read More</a>
+                    </div>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-image" style="background-image: url('/api/placeholder/300/200')"></div>
+                    <div class="feature-content">
+                        <h3 class="feature-title">Termites and Flies</h3>
+                        <p class="feature-author">By John Smith</p>
+                        <p class="feature-excerpt">Nulla facilisi. Sed efficitur, enim eget pharetra molestie, quam nisi dictum tortor, vel rhoncus velit metus nec dolor. Morbi faucibus nisi vitae...</p>
+                        <a href="#" class="read-more">Read More</a>
+                    </div>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-image" style="background-image: url('/api/placeholder/300/200')"></div>
+                    <div class="feature-content">
+                        <h3 class="feature-title">Baseball Card</h3>
+                        <p class="feature-author">By Michael Johnson</p>
+                        <p class="feature-excerpt">Vivamus varius nisl at nulla laoreet, nec finibus nulla pharetra. Proin blandit lacinia erat, non suscipit purus condimentum vel. Donec...</p>
+                        <a href="#" class="read-more">Read More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="previous-issues" id="archive">
+        <div class="container">
+            <h2 class="section-title">Previous Issues</h2>
+            
+            <div class="issues-grid">
+                <div class="issue-card">
+                    <img src="/api/placeholder/200/250" alt="Fall 2024 Issue">
+                    <div class="issue-info">
+                        <p>Fall 2024</p>
+                        <p>Vol. 23, Issue 1</p>
+                    </div>
+                </div>
+                
+                <div class="issue-card">
+                    <img src="/api/placeholder/200/250" alt="Spring 2024 Issue">
+                    <div class="issue-info">
+                        <p>Spring 2024</p>
+                        <p>Vol. 22, Issue 2</p>
+                    </div>
+                </div>
+                
+                <div class="issue-card">
+                    <img src="/api/placeholder/200/250" alt="Fall 2023 Issue">
+                    <div class="issue-info">
+                        <p>Fall 2023</p>
+                        <p>Vol. 22, Issue 1</p>
+                    </div>
+                </div>
+                
+                <div class="issue-card">
+                    <img src="/api/placeholder/200/250" alt="Spring 2023 Issue">
+                    <div class="issue-info">
+                        <p>Spring 2023</p>
+                        <p>Vol. 21, Issue 2</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="submissions" id="submissions">
+        <div class="container">
+            <h2 class="section-title">Submissions</h2>
+            <p>We are currently accepting submissions for our Fall 2025 issue. We welcome poetry, fiction, creative non-fiction, artwork, and photography from students, faculty, and alumni.</p>
+            <p>Deadline: October 15, 2025</p>
+            <a href="#" class="submit-button">Submit Your Work</a>
+        </div>
+    </section>
+
+    <section class="about" id="about">
+        <div class="container" style="padding: 40px 0; background-color: var(--light);">
+            <h2 class="section-title">About the Magazine</h2>
+            <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+                <p style="margin-bottom: 20px;">Literary Horizons is Saint Joseph's University's premier literary magazine, published biannually. Founded in 2002, the magazine showcases poetry, prose, and visual art from talented students, faculty, and alumni.</p>
+                <p>Our mission is to cultivate a vibrant literary community on campus and provide a platform for creative expression. Each issue is curated by our dedicated student editorial team and faculty advisors.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="staff" id="staff">
+        <div class="container" style="padding: 40px 0; background-color: white;">
+            <h2 class="section-title">Editorial Staff</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 30px; max-width: 900px; margin: 0 auto;">
+                <div style="text-align: center;">
+                    <img src="/api/placeholder/150/150" alt="Editor" style="border-radius: 50%; margin-bottom: 10px;">
+                    <h3 style="margin-bottom: 5px;">Emma Williams</h3>
+                    <p style="font-style: italic;">Editor-in-Chief</p>
+                </div>
+                <div style="text-align: center;">
+                    <img src="/api/placeholder/150/150" alt="Editor" style="border-radius: 50%; margin-bottom: 10px;">
+                    <h3 style="margin-bottom: 5px;">Daniel Chen</h3>
+                    <p style="font-style: italic;">Managing Editor</p>
+                </div>
+                <div style="text-align: center;">
+                    <img src="/api/placeholder/150/150" alt="Editor" style="border-radius: 50%; margin-bottom: 10px;">
+                    <h3 style="margin-bottom: 5px;">Sophia Martinez</h3>
+                    <p style="font-style: italic;">Poetry Editor</p>
+                </div>
+                <div style="text-align: center;">
+                    <img src="/api/placeholder/150/150" alt="Editor" style="border-radius: 50%; margin-bottom: 10px;">
+                    <h3 style="margin-bottom: 5px;">James Wilson</h3>
+                    <p style="font-style: italic;">Fiction Editor</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="social-links">
+                    <a href="#"><span>Facebook</span></a>
+                    <a href="#"><span>Twitter</span></a>
+                    <a href="#"><span>Instagram</span></a>
+                </div>
+                
+                <div class="footer-menu">
+                    <a href="#current-issue">Current Issue</a>
+                    <a href="#about">About</a>
+                    <a href="#archive">Archive</a>
+                    <a href="#submissions">Submissions</a>
+                </div>
+                
+                <div class="contact-info">
+                    <p>Contact: literaryhorizons@sju.edu</p>
+                    <p>Department of English, Saint Joseph's University</p>
+                    <p>5600 City Ave, Philadelphia, PA 19131</p>
+                </div>
+                
+                <p class="copyright">© 2025 Literary Horizons. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
