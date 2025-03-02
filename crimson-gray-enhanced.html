@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crimson and Gray Literary Magazine - Saint Joseph's University</title>
+    <style>
+        /* Color scheme based on crimson and gray theme */
+        :root {
+            --primary: #990000; /* Crimson */
+            --secondary: #4a4a4a; /* Gray */
+            --accent: #990000; /* Crimson accent */
+            --background: #f5f5f5;
+            --text: #333;
+            --light: #ecf0f1;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--background);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 20px 0;
+            position: relative;
+        }
+        
+        .site-title {
+            font-size: 2.5rem;
+            margin-bottom: 5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .site-subtitle {
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+        
+        /* Navigation */
+        nav {
+            background-color: var(--primary);
+            padding-bottom: 10px;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        nav ul li {
+            margin-right: 20px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            padding: 5px 0;
+            position: relative;
+        }
+        
+        nav ul li a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #d3d3d3;
+            transition: width 0.2s ease-in-out;
+        }
+        
+        nav ul li a:hover:after {
+            width: 100%;
+        }
+
+        /* Carousel */
+        .carousel-container {
+            position: relative;
+            max-width: 1000px;
+            margin: 40px auto;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            border-radius: 8px;
+        }
+        
+        .carousel {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            height: 500px;
+        }
+        
+        .carousel-slide {
+            min-width: 100%;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+        
+        .slide-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .slide-content {
+            z-index: 10;
+            max-width: 80%;
+        }
+        
+        .slide-title {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .slide-text {
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+        
+        .slide-button {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 3px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        
+        .slide-button:hover {
+            background-color: var(--secondary);
+        }
+        
+        .carousel-nav {
+            display: flex;
+            justify-content: center;
+            margin-top: -30px;
+            position: relative;
+            z-index: 100;
+        }
+        
+        .carousel-indicator {
+            width: 12px;
+            height: 12px;
+            background-color: #ddd;
+            border-radius: 50%;
+            margin: 0 8px;
+            cursor: pointer;
+        }
+        
+        .carousel-indicator.active {
+            background-color: var(--primary);
+        }
+        
+        .carousel-prev, .carousel-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.5);
+            color: #333;
+            padding: 10px 15px;
+            cursor: pointer;
+            z-index: 100;
+            font-weight: bold;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            font-size: 1.5rem;
+        }
+        
+        .carousel-prev {
+            left: 10px;
+        }
+        
+        .carousel-next {
+            right: 10px;
+        }
+        
+        .artist-credit {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 0.8rem;
+        }
+        
+        /* Current Issue Section */
+        .current-issue {
+            padding: 40px 0;
+            background: white;
+        }
+        
+        .issue-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .issue-title {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .issue-subtitle {
+            font-style: italic;
+            color: var(--secondary);
+        }
+        
+        .issue-cover {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        
+        .issue-cover img {
+            max-width: 300px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        /* Feature Section */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .feature {
+            background: white;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .feature:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-image {
+            height: 200px;
+            background-color: #ddd;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .feature-content {
+            padding: 20px;
+        }
+        
+        .feature-title {
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .feature-author {
+            font-style: italic;
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+        
+        .feature-excerpt {
+            margin-bottom: 15px;
+        }
+        
+        .read-more {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 8px 15px;
+            text-decoration: none;
+            border-radius: 3px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .read-more:hover {
+            background-color: var(--secondary);
+        }
+
+        /* Launch Event */
+        .launch-event {
+            padding: 40px 0;
+            background-color: #f9f3f3; /* Light crimson tint */
+            text-align: center;
+        }
+        
+        .event-details {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .event-title {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+        
+        .event-info {
+            margin-bottom: 20px;
+        }
+        
+        .event-info p {
+            margin-bottom: 10px;
+        }
+        
+        .event-location {
+            font-weight: bold;
+        }
+        
+        /* Previous Issues */
+        .previous-issues {
+            padding: 40px 0;
+            background-color: var(--light);
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            color: var(--primary);
+        }
+        
+        .issues-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .issue-card {
+            text-align: center;
+        }
+        
+        .issue-card img {
+            max-width: 150px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+            margin-bottom: 10px;
+            transition: transform 0.3s ease;
+        }
+        
+        .issue-card img:hover {
+            transform: scale(1.05);
+        }
+        
+        .issue-info {
+            font-size: 0.9rem;
+        }
+        
+        .download-link {
+            display: inline-block;
+            margin-top: 10px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .download-link:hover {
+            text-decoration: underline;
+        }
+        
+        /* Application Form */
+        .join-team {
+            padding: 40px 0;
+            background-color: white;
+        }
+        
+        .form-container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+        }
+        
+        .submit-form {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .submit-form:hover {
+            background-color: #7a0000;
+        }
+        
+        /* Submissions Section */
+        .submissions {
+            padding: 40px 0;
+            background-color: var(--light);
+            text-align: center;
+        }
+        
+        .submissions p {
+            max-width: 700px;
+            margin: 0 auto 20px;
+        }
+        
+        .submit-button {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 3px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        
+        .submit-button:hover {
+            background-color: #7a0000;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--secondary);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .social-links {
+            margin-bottom: 20px;
+        }
+        
+        .social-links a {
+            color: white;
+            margin: 0 10px;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: #d3d3d3;
+        }
+        
+        .footer-menu {
+            margin-bottom: 20px;
+        }
+        
+        .footer-menu a {
+            color: white;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+        
+        .footer-menu a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .site-title {
+                font-size: 2rem;
+            }
+            
+            nav ul {
+                flex-direction: column;
+            }
+            
+            nav ul li {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+            
+            .carousel-slide {
+                height: 400px;
+            }
+            
+            .slide-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="site-title">Crimson and Gray</h1>
+            <p class="site-subtitle">Saint Joseph's University Literary Magazine</p>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#current-issue">Current Issue</a></li>
+                    <li><a href="#archive">Archive</a></li>
+                    <li><a href="#join-team">Join Our Team</a></li>
+                    <li><a href="#submissions">Submissions</a></li>
+                    <li><a href="#staff">Staff</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="home">
+        <div class="carousel-container">
+            <div class="carousel">
+                <!-- Slide 1: Launch Event -->
+                <div class="carousel-slide" style="background-image: url('/api/placeholder/1000/500');">
+                    <div class="slide-overlay"></div>
+                    <div class="slide-content">
+                        <h2 class="slide-title">2025 Launch Event</h2>
+                        <p class="slide-text">Join us this April for the unveiling of our 2025 edition at the Maguire Museum of Art. Readings, refreshments, and celebration of creativity.</p>
+                        <a href="#launch-event" class="slide-button">Learn More</a>
+                    </div>
+                </div>
+                
+                <!-- Slide 2: Artist Feature -->
+                <div class="carousel-slide" style="background-image: url('/api/placeholder/1000/500');">
+                    <div class="slide-overlay"></div>
+                    <div class="slide-content">
+                        <h2 class="slide-title">2024 Edition Available Now</h2>
+                        <p class="slide-text">Experience the latest collection of poetry, fiction, and visual art from the SJU community.</p>
+                        <a href="#current-issue" class="slide-button">View Issue</a>
+                    </div>
+                    <div class="artist-credit">Artwork by Anne Gutherman</div>
+                </div>
+                
+                <!-- Slide 3: Join the Team -->
+                <div class="carousel-slide" style="background-image: url('/api/placeholder/1000/500');">
+                    <div class="slide-overlay"></div>
+                    <div class="slide-content">
+                        <h2 class="slide-title">Join Our Editorial Team</h2>
+                        <p class="slide-text">Help shape the future of Crimson and Gray. We're looking for passionate editors, designers, and writers.</p>
+                        <a href="#join-team" class="slide-button">Apply Now</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="carousel-prev">&#10094;</div>
+            <div class="carousel-next">&#10095;</div>
+            
+            <div class="carousel-nav">
+                <div class="carousel-indicator active"></div>
+                <div class="carousel-indicator"></div>
+                <div class="carousel-indicator"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="current-issue" id="current-issue">
+        <div class="container">
+            <div class="issue-header">
+                <h2 class="issue-title">2024 Edition Now Available</h2>
+                <p class="issue-subtitle">Crimson and Gray</p>
+            </div>
+            
+            <div class="issue-cover">
+                <img src="/api/placeholder/400/500" alt="2024 Crimson and Gray Cover">
+            </div>
+            
+            <div style="text-align: center; margin-bottom: 30px;">
+                <a href="#" class="read-more">Download PDF</a>
+                <p style="margin-top: 15px;">Experience the latest collection of poetry, fiction, and visual art from the SJU community.</p>
+            </div>
+            
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-image" style="background-image: url('/api/placeholder/300/200')"></div>
+                    <div class="feature-content">
+                        <h3 class="feature-title">Featured Poetry</h3>
+                        <p class="feature-author">Selected works from our contributors</p>
+                        <p class="feature-excerpt">Explore the evocative language and imagery that defines this year's poetic selections...</p>
+                        <a href="#" class="read-more">Read More</a>
+                    </div>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-image" style="background-image: url('/api/placeholder/300/200')"></div>
+                    <div class="feature-content">
+                        <h3 class="feature-title">Visual Arts</h3>
+                        <p class="feature-author">Photography, illustrations, and more</p>
+                        <p class="feature-excerpt">Discover the stunning visual works that complement our written pieces...</p>
+                        <a href="#" class="read-more">View Gallery</a>
+                    </div>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-image" style="background-image: url('/api/placeholder/300/200')"></div>
+                    <div class="feature-content">
+                        <h3 class="feature-title">Fiction Highlights</h3>
+                        <p class="feature-author">Short stories and prose</p>
+                        <p class="feature-excerpt">Immerse yourself in compelling narratives from our talented writers...</p>
+                        <a href="#" class="read-more">Read More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="launch-event" id="launch-event">
+        <div class="container">
+            <h2 class="section-title">2025 Edition Launch Event</h2>
+            <div class="event-details">
+                <h3 class="event-title">Join Us for the Unveiling</h3>
+                <div class="event-info">
+                    <p><strong>Date:</strong> April 2025</p>
+                    <p><strong>Location:</strong> <span class="event-location">Maguire Museum of Art</span>, Saint Joseph's University</p>
+                    <p>Be among the first to experience the 2025 edition of Crimson and Gray. Join us for readings, refreshments, and celebration of our contributors' creative achievements.</p>
+                </div>
+                <p>The 2025 edition is currently in production. Stay tuned for more details about our launch party!</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="previous-issues" id="archive">
+        <div class="container">
+            <h2 class="section-title">Previous Editions</h2>
+            
+            <div class="issues-grid">
+                <div class="issue-card">
+                    <img src="/api/placeholder/200/250" alt="2024 Edition">
+                    <div class="issue-info">
+                        <p>2024 Edition</p>
+                        <a href="#" class="download-link">Download PDF</a>
+                    </div>
+                </div>
+                
+                <div class="issue-card">
+                    <img src="/api/placeholder/200/250" alt="2023 Edition">
+                    <div class="issue-info">
+                        <p>2023 Edition</p>
+                        <a href="#" class="download-link">Download PDF</a>
+                    </div>
+                </div>
+                
+                <div class="issue-card">
+                    <img src="/api/placeholder/200/250" alt="2022 Edition">
+                    <div class="issue-info">
+                        <p>2022 Edition</p>
+                        <a href="#" class="download-link">Download PDF</a>
+                    </div>
+                </div>
+                
+                <div class="issue-card">
+                    <img src="/api/placeholder/200/250" alt="2021 Edition">
+                    <div class="issue-info">
+                        <p>2021 Edition</p>
+                        <a href="#" class="download-link">Download PDF</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="join-team" id="join-team">
+        <div class="container">
+            <h2 class="section-title">Join Our Editorial Team</h2>
+            
+            <div class="form-container">
+                <form id="application-form">
+                    <div class="form-group">
+                        <label for="full-name">Full Name:</label>
+                        <input type="text" id="full-name" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">School Email:</label>
+                        <input type="email" id="email" class="form-control" required placeholder="yourname@sju.edu">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="year">Academic Year:</label>
+                        <select id="year" class="form-control" required>
+                            <option value="">Select your year</option>
+                            <option value="freshman">Freshman</option>
+                            <option value="sophomore">Sophomore</option>
+                            <option value="junior">Junior</option>
+                            <option value="senior">Senior</option>
+                            <option value="graduate">Graduate Student</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="position">Position of Interest:</label>
+                        <select id="position" class="form-control" required>
+                            <option value="">Select a position</option>
+                            <option value="editor">Editor</option>
+                            <option value="designer">Designer</option>
+                            <option value="marketing">Marketing/Social Media</option>
+                            <option value="events">Events Coordinator</option>
+                            <option value="other">Other (specify in statement)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="statement">Why do you want to join the Crimson and Gray team?</label>
+                        <textarea id="statement" class="form-control" required placeholder="Share your interest in literary publishing and what you hope to contribute to the magazine..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="writing-sample">Writing Sample:</label>
+                        <textarea id="writing-sample" class="form-control" required placeholder="Please copy and paste a brief writing sample that demonstrates your style and abilities..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-form">Submit Application</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section class="submissions" id="submissions">
+        <div class="container">
+            <h2 class="section-title">Submissions</h2>
+            <p>We are currently accepting submissions for our 2025 edition. We welcome poetry, fiction, creative non-fiction, artwork, and photography from students, faculty, and alumni of Saint Joseph's University.</p>
+            <p>Deadline: December 15, 2024</p>
+            <a href="#" class="submit-button">Submit Your Work</a>
+        </div>
+    </section>
+
+    <section class="staff" id="staff">
+        <div class="container" style="padding: 40px 0; background-color: white;">
+            <h2 class="section-title">Editorial Staff</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 30px; max-width: 900px; margin: 0 auto;">
+                <div style="text-align: center;">
+                    <img src="/api/placeholder/150/150" alt="Editor" style="border-radius: 50%; margin-bottom: 10px;">
+                    <h3 style="margin-bottom: 5px;">Isaac Schwartz</h3>
+                    <p style="font-style: italic;">Editor-in-Chief</p>
+                </div>
+                <div style="text-align: center;">
+                    <img src="/api/placeholder/150/150" alt="Faculty Advisor" style="border-radius: 50%; margin-bottom: 10px;">
+                    <h3 style="margin-bottom: 5px;">Dr. April Lindner</h3>
+                    <p style="font-style: italic;">Faculty Advisor</p>
+                </div>
+                <div style="text-align: center;">
+                    <img src="/api/placeholder/150/150" alt="Designer" style="border-radius: 50%; margin-bottom: 10px;">
+                    <h3 style="margin-bottom: 5px;">Madeleine Pirages</h3>
+                    <p style="font-style: italic;">Magazine Designer</p>
+                </div>
+                <div style="text-align: center;">
+                    <img src="/api/placeholder/150/150" alt="Designer" style="border-radius: 50%; margin-bottom: 10px;">
+                    <h3 style="margin-bottom: 5px;">Carina Seabra</h3>
+                    <p style="font-style: italic;">Magazine Designer</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="social-links">
+                    <a href="#"><span>Facebook</span></a>
+                    <a href="#"><span>Twitter</span></a>
+                    <a href="#"><span>Instagram</span></a>
+                </div>
+                
+                <div class="footer-menu">
+                    <a href="#current-issue">Current Issue</a>
+                    <a href="#about">About</a>
+                    <a href="#archive">Archive</a>
+                    <a href="#submissions">Submissions</a>
+                </div>
+                
+                <div class="contact-info">
+                    <p>Contact: <a href="mailto:1isaacschwartz@gmail.com" style="color: white;">1isaacschwartz@gmail.com</a></p>
+                    <p>Department of English, Saint Joseph's University</p>
+                    <p>5600 City Ave, Philadelphia, PA 19131</p>
+                </div>
+                
+                <p class="copyright">© 2024 Crimson and Gray Literary Magazine. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Carousel functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            let currentSlide = 0;
+            const slides = document.querySelectorAll('.carousel-slide');
+            const indicators = document.querySelectorAll('.carousel-indicator');
+            const prevButton = document.querySelector('.carousel-prev');
+            const nextButton = document.querySelector('.carousel-next');
+            const carousel = document.querySelector('.carousel');
+            
+            // Set up the initial state
+            updateCarousel();
+            
+            // Auto-advance the carousel every 5 seconds
+            let slideInterval = setInterval(nextSlide, 5000);
+            
+            // Event listeners for navigation
+            prevButton.addEventListener('click', function() {
+                prevSlide();
+                resetInterval();
+            });
+            
+            nextButton.addEventListener('click', function() {
+                nextSlide();
+                resetInterval();
+            });
+            
+            indicators.forEach((indicator, index) => {
+                indicator.addEventListener('click', function() {
+                    currentSlide = index;
+                    updateCarousel();
+                    resetInterval();
+                });
+            });
+            
+            // Functions to control the carousel
+            function updateCarousel() {
+                // Update slide position
+                carousel.style.transform = `translateX(-${currentSlide * 100}%)`;
+                
+                // Update indicators
+                indicators.forEach((indicator, index) => {
+                    indicator.classList.toggle('active', index === currentSlide);
+                });
+            }
+            
+            function nextSlide() {
+                currentSlide = (currentSlide + 1) % slides.length;
+                updateCarousel();
+            }
+            
+            function prevSlide() {
+                currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+                updateCarousel();
+            }
+            
+            function resetInterval() {
+                clearInterval(slideInterval);
+                slideInterval = setInterval(nextSlide, 5000);
+            }
+            
+            // Form submission handling
+            const applicationForm = document.getElementById('application-form');
+            if (applicationForm) {
+                applicationForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // In a real implementation, this would send the form data to a server
+                    // For now, we'll just show an alert
+                    alert('Thank you for your application! We will review your submission and contact you soon.');
+                    
+                    // Optional: Reset the form
+                    applicationForm.reset();
+                });
+            }
